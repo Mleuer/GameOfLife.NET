@@ -1,4 +1,4 @@
-namespace GameOfLife.NET
+namespace GameOfLife.NET.Model
 {
     public class Tile
     {
@@ -16,6 +16,12 @@ namespace GameOfLife.NET
                 this.State = TileState.alive;
             }
         }
+
+        public void CheckStateOfNeighbors()
+        {
+            
+        }
+        
 
 
     }
