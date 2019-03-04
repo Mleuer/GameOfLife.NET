@@ -4,5 +4,10 @@
 \.idea/\.idea\.GameOfLife\.NET/
 
 GameOfLife\.NET/obj/
+GameOfLife\.NET/bin/
+GameOfLife.NET.Test/bin/
+GameOfLife.NET.Test/obj/
+packages/
 
 GameOfLife\.NET\.sln\.DotSettings\.user
+.DS_Store
