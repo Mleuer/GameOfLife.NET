@@ -7,7 +7,7 @@ namespace GameOfLife.NET.Test
     public class GameBoardTest
     {
         [Test]
-        public void FindNeighborsShouldReturnAdjacentTiles()
+        public void FindNeighborsShouldReturnAdjacentTilesWhenTileIsSurroundedByTiles()
         {            
             Tile tile = new Tile();
             
@@ -22,10 +22,41 @@ namespace GameOfLife.NET.Test
 
             List<Tile> neighbors = gameBoard.FindNeighbors(tile);
 
-            Assert.Contains(grid[2][2], neighbors);
+            List<Tile> expectedNeighbors = new List<Tile>()
+            {
+                grid[0][0], grid[0][1], grid[0][2],
+                grid[1][0], grid[1][2],
+                grid[2][0], grid[2][1], grid[2][2]
+            };
 
+            CollectionAssert.AreEquivalent(expectedNeighbors, neighbors);
         }
+        
+        [Test]
+        public void FindNeighborsShouldReturnAdjacentTilesWhenTileIsInTheCorner()
+        {            
+            Tile tile = new Tile();
+            
+            Tile[][] grid = new Tile[][]
+            {
+                new Tile[] {new Tile(), new Tile(), new Tile()},
+                new Tile[] {new Tile(), new Tile(), new Tile()},
+                new Tile[] {tile, new Tile(), new Tile()}
+            };
+            
+            GameBoard gameBoard = new GameBoard(grid);
 
+            List<Tile> neighbors = gameBoard.FindNeighbors(tile);
+
+            List<Tile> expectedNeighbors = new List<Tile>()
+            {
+                grid[1][0], grid[1][1],
+                            grid[2][1]
+            };
+
+            CollectionAssert.AreEquivalent(expectedNeighbors, neighbors);
+        }
+        
         [Test]
         public void FindIndexOfTileShouldReturnCorrectIndex()
         {
