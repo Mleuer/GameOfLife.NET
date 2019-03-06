@@ -14,7 +14,7 @@ namespace GameOfLife.NET.Model
             Grid = grid;
         }
 
-        private (uint, uint) findIndexOfTile(Tile theTile)
+        public (uint, uint) FindIndexOfTile(Tile theTile)
         {
             (uint, uint) index = (0, 0);
             bool matchFound = false;
@@ -45,9 +45,58 @@ namespace GameOfLife.NET.Model
             }
         }
 
-        public List<Tile> FindNeighbors(Tile tile)
+        public List<Tile> FindNeighbors(Tile theTile)
         {
+            var game1 = new GameBoard(new Tile[GameBoardWidth][]);
+        
+            (uint, uint) tileIndex = FindIndexOfTile(theTile);
+
+            Tile top, topLeft, left, topRight, right, bottom, bottomLeft, bottomRight;
+            List<Tile> neighbors = new List<Tile>();
+
             
+
+            if (tileIndex.Item1 > 0)
+            {
+                top = Grid[tileIndex.Item1 - 1][tileIndex.Item2];
+                neighbors.Add(top);   
+                
+                if (tileIndex.Item2 > 0 )
+                {
+                    topLeft = Grid[tileIndex.Item1 - 1][tileIndex.Item2 - 1];
+                    left = Grid[tileIndex.Item1][tileIndex.Item2 - 1];
+                    neighbors.Add(topLeft);
+                    neighbors.Add(left);
+                }
+
+                if (tileIndex.Item2 < (Grid[0].Length - 1))
+                {
+                    topRight = Grid[tileIndex.Item1 - 1][tileIndex.Item2 + 1];
+                    right = Grid[tileIndex.Item1][tileIndex.Item2 + 1];
+                    neighbors.Add(topRight);
+                    neighbors.Add(right); 
+                }
+            }
+
+            if (tileIndex.Item1 < Grid.Length - 1)
+            {
+                bottom = Grid[tileIndex.Item1 + 1][tileIndex.Item2];
+                neighbors.Add(bottom);
+
+                if (tileIndex.Item2 > 0 )
+                {
+                    bottomLeft = Grid[tileIndex.Item1 + 1][tileIndex.Item2 - 1];
+                    neighbors.Add(bottomLeft);
+                }
+
+                if (tileIndex.Item2 < (Grid[0].Length - 1))
+                {
+                    bottomRight = Grid[tileIndex.Item1 + 1][tileIndex.Item2 + 1];
+                    neighbors.Add(bottomRight);
+                }
+            }
+            
+            return neighbors;
         }
         
         
