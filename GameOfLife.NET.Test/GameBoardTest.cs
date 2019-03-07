@@ -20,7 +20,7 @@ namespace GameOfLife.NET.Test
             
             GameBoard gameBoard = new GameBoard(grid);
 
-            List<Tile> neighbors = gameBoard.FindNeighbors(tile);
+            var neighbors = gameBoard.FindNeighbors(tile);
 
             List<Tile> expectedNeighbors = new List<Tile>
             {
@@ -46,7 +46,7 @@ namespace GameOfLife.NET.Test
             
             GameBoard gameBoard = new GameBoard(grid);
 
-            List<Tile> neighbors = gameBoard.FindNeighbors(tile);
+            var neighbors = gameBoard.FindNeighbors(tile);
 
             List<Tile> expectedNeighbors = new List<Tile>
             {

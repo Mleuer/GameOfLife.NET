@@ -1,48 +1,37 @@
 using System;
 using System.Collections.Generic;
-using static GameOfLife.NET.Config.Configuration;
 namespace GameOfLife.NET.Model
 
 
 {
     public class GameBoard
     {
-        public Tile[][] Grid { get; } = new Tile[GameBoardWidth][];
+        public Tile[][] Grid { get; }
 
         public GameBoard(Tile[][] grid)
         {
             Grid = grid;
         }
 
-        public (uint, uint) FindIndexOfTile(Tile theTile)
+        public (uint, uint) FindIndexOfTile(Tile tile)
         {
-            (uint, uint) index = (0, 0);
-            bool matchFound = false;
-           
             for (uint i = 0; i < Grid.Length; i++)
             {
                 Tile[] arrayOfTiles = Grid[i];
                 
                 for (uint j = 0; j < arrayOfTiles.Length; j++)
                 {
-                    Tile tile = arrayOfTiles[j];
+                    Tile currentTile = arrayOfTiles[j];
                     
-                    if (tile == theTile)
+                    if (currentTile == tile)
                     {
-                        index = (i, j);
-                        matchFound = true;
+                        return (i, j);
                     }
                     
                 }
             }
-            if (matchFound)
-            {
-                return index;
-            }
-            else
-            {
-                throw new ArgumentException();
-            }
+
+            throw new ArgumentException("No matching tile");
         }
 
         public void SetNextStateOfTile(Tile theTile)
@@ -81,17 +70,13 @@ namespace GameOfLife.NET.Model
             }           
         }
 
-        public List<Tile> FindNeighbors(Tile theTile)
+        public ICollection<Tile> FindNeighbors(Tile tile)
         {
-            var game1 = new GameBoard(new Tile[GameBoardWidth][]);
-        
-            (uint, uint) tileIndex = FindIndexOfTile(theTile);
+            (uint, uint) tileIndex = FindIndexOfTile(tile);
 
             Tile top, topLeft, left, topRight, right, bottom, bottomLeft, bottomRight;
-            List<Tile> neighbors = new List<Tile>();
-
+            var neighbors = new HashSet<Tile>();
             
-
             if (tileIndex.Item1 > 0)
             {
                 top = Grid[tileIndex.Item1 - 1][tileIndex.Item2];
@@ -135,9 +120,9 @@ namespace GameOfLife.NET.Model
             return neighbors;
         }
         
-        public List<Tile> FindLiveNeighbors(Tile theTile)
+        public List<Tile> FindLiveNeighbors(Tile tile)
         {
-            List<Tile> neighbors = FindNeighbors(theTile);
+            var neighbors = FindNeighbors(tile);
             List<Tile> liveNeighbors = new List<Tile>();
 
             foreach (var neighbor in neighbors)
