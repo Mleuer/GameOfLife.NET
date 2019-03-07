@@ -12,22 +12,22 @@ namespace GameOfLife.NET.Test
         public void ChangeStateShouldChangeLivingStateToDeadState()
         {
             var tile = new Tile();
-            tile.State = TileState.alive;
+            tile.State = TileState.Alive;
             
             tile.ChangeState();
             
-            Assert.AreEqual(TileState.dead, tile.State);
+            Assert.AreEqual(TileState.Dead, tile.State);
         }
         
         [Test]
         public void ChangeStateShouldChangeDeadStateToAlive()
         {
             var tile = new Tile();
-            tile.State = TileState.dead;
+            tile.State = TileState.Dead;
             
             tile.ChangeState();
             
-            Assert.AreEqual(TileState.alive, tile.State);
+            Assert.AreEqual(TileState.Alive, tile.State);
         }
     }
 }

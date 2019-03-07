@@ -14,7 +14,7 @@ namespace GameOfLife.NET.Test
             Tile[][] grid = new Tile[][]
             {
                 new Tile[] {new Tile(), new Tile(), new Tile()},
-                new Tile[] {new Tile(), tile, new Tile()},
+                new Tile[] {new Tile(), tile,       new Tile()},
                 new Tile[] {new Tile(), new Tile(), new Tile()}
             };
             
@@ -22,10 +22,10 @@ namespace GameOfLife.NET.Test
 
             List<Tile> neighbors = gameBoard.FindNeighbors(tile);
 
-            List<Tile> expectedNeighbors = new List<Tile>()
+            List<Tile> expectedNeighbors = new List<Tile>
             {
                 grid[0][0], grid[0][1], grid[0][2],
-                grid[1][0], grid[1][2],
+                grid[1][0],             grid[1][2],
                 grid[2][0], grid[2][1], grid[2][2]
             };
 
@@ -41,14 +41,14 @@ namespace GameOfLife.NET.Test
             {
                 new Tile[] {new Tile(), new Tile(), new Tile()},
                 new Tile[] {new Tile(), new Tile(), new Tile()},
-                new Tile[] {tile, new Tile(), new Tile()}
+                new Tile[] {tile,       new Tile(), new Tile()}
             };
             
             GameBoard gameBoard = new GameBoard(grid);
 
             List<Tile> neighbors = gameBoard.FindNeighbors(tile);
 
-            List<Tile> expectedNeighbors = new List<Tile>()
+            List<Tile> expectedNeighbors = new List<Tile>
             {
                 grid[1][0], grid[1][1],
                             grid[2][1]
@@ -65,7 +65,7 @@ namespace GameOfLife.NET.Test
             Tile[][] grid = new Tile[][]
             {
                 new Tile[] {new Tile(), new Tile(), new Tile()},
-                new Tile[] {new Tile(), tile, new Tile()},
+                new Tile[] {new Tile(), tile,       new Tile()},
                 new Tile[] {new Tile(), new Tile(), new Tile()}
             };
             
@@ -80,77 +80,77 @@ namespace GameOfLife.NET.Test
         [Test]
         public void SetNextStateOfTileShouldSetNextStateToDeadWhenLiveTileHasLessThanTwoLiveNeighbors()
         {
-            var tile = new Tile {State = TileState.alive};
+            var tile = new Tile { State = TileState.Alive };
 
             Tile[][] grid = new Tile[][]
             {
-                new Tile[] {new Tile {State = TileState.alive}, new Tile(), new Tile()},
-                new Tile[] {new Tile(),                         tile,       new Tile()},
-                new Tile[] {new Tile(),                         new Tile(), new Tile()}
+                new Tile[] {new Tile { State = TileState.Alive }, new Tile(), new Tile()},
+                new Tile[] {new Tile(),                           tile,       new Tile()},
+                new Tile[] {new Tile(),                           new Tile(), new Tile()}
             };
 
             var gameBoard = new GameBoard(grid);
 
             gameBoard.SetNextStateOfTile(tile);
 
-            Assert.AreEqual(TileState.dead, tile.NextState);
+            Assert.AreEqual(TileState.Dead, tile.NextState);
         }
         
         [Test]
         public void SetNextStateOfTileShouldSetNextStateToAliveWhenLiveTileHasTwoOrThreeThreeLiveNeighbors()
         {
-            var tile = new Tile {State = TileState.alive};
+            var tile = new Tile { State = TileState.Alive };
 
             Tile[][] grid = new Tile[][]
             {
-                new Tile[] {new Tile(),                           new Tile(),                         new Tile {State = TileState.alive}},
-                new Tile[] {new Tile(){State = TileState.alive}, tile,                                new Tile()},
-                new Tile[] {new Tile(),                           new Tile {State = TileState.alive}, new Tile()}
+                new Tile[] {new Tile(),                           new Tile(),                           new Tile { State = TileState.Alive }},
+                new Tile[] {new Tile { State = TileState.Alive }, tile,                                 new Tile()},
+                new Tile[] {new Tile(),                           new Tile { State = TileState.Alive }, new Tile()}
             };
 
             var gameBoard = new GameBoard(grid);
 
             gameBoard.SetNextStateOfTile(tile);
 
-            Assert.AreEqual(TileState.alive, tile.NextState);
+            Assert.AreEqual(TileState.Alive, tile.NextState);
         }
 
         [Test]
         public void SetNextStateOfTileShouldSetNextStateToDeadWhenLiveTileHasMoreThanThreeLiveNeighbors()
         {
-            var tile = new Tile {State = TileState.alive};
+            var tile = new Tile { State = TileState.Alive };
 
             Tile[][] grid = new Tile[][]
             {
-                new Tile[] {new Tile {State = TileState.alive}, new Tile(),                         new Tile {State = TileState.alive}},
-                new Tile[] {new Tile {State = TileState.alive}, tile,                               new Tile()},
-                new Tile[] {new Tile(),                         new Tile {State = TileState.alive}, new Tile()}
+                new Tile[] {new Tile { State = TileState.Alive }, new Tile(),                           new Tile { State = TileState.Alive }},
+                new Tile[] {new Tile { State = TileState.Alive }, tile,                                 new Tile()},
+                new Tile[] {new Tile(),                           new Tile { State = TileState.Alive }, new Tile()}
             };
 
             var gameBoard = new GameBoard(grid);
 
             gameBoard.SetNextStateOfTile(tile);
 
-            Assert.AreEqual(TileState.dead, tile.NextState);
+            Assert.AreEqual(TileState.Dead, tile.NextState);
         }
 
         [Test]
         public void SetNextStateOfTileShouldSetNextStateToAliveWhenDeadTileHasExactlyThreeLiveNeighbors()
         {
-            var tile = new Tile{State = TileState.dead};
+            var tile = new Tile { State = TileState.Dead };
             
             Tile[][] grid = new Tile[][]
             {
-                new Tile[] {new Tile{State = TileState.alive}, new Tile(),                        new Tile{State = TileState.alive}},
-                new Tile[] {new Tile(),                        tile,                              new Tile()},
-                new Tile[] {new Tile(),                        new Tile{State = TileState.alive}, new Tile()}
+                new Tile[] {new Tile{ State = TileState.Alive }, new Tile(),                          new Tile { State = TileState.Alive }},
+                new Tile[] {new Tile(),                          tile,                                new Tile()},
+                new Tile[] {new Tile(),                          new Tile{ State = TileState.Alive }, new Tile()}
             };
   
             var gameBoard = new GameBoard(grid);
             
             gameBoard.SetNextStateOfTile(tile);
             
-            Assert.AreEqual(TileState.alive, tile.NextState);
+            Assert.AreEqual(TileState.Alive, tile.NextState);
         }
     }
 }

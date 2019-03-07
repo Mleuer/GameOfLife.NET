@@ -1,38 +1,29 @@
-using System.Collections.Generic;
-
 namespace GameOfLife.NET.Model
 {
     public class Tile
     {
-        public TileState State { get; set; } = TileState.dead;
-        public TileState NextState { get; set; } = TileState.tileStateUnset;
+        public TileState State { get; set; } = TileState.Dead;
+        public TileState NextState { get; set; } = TileState.Unset;
 
       
         public void ChangeState()
         {
-            if (this.State == TileState.alive)
+            if (this.State == TileState.Alive) 
             {
-                this.State = TileState.dead;
+                this.State = TileState.Dead;
             }
-            if (this.State == TileState.dead)
+            if (this.State == TileState.Dead)  
             {
-                this.State = TileState.alive;
+                this.State = TileState.Alive;
             }
         }
-
-        public void CheckStateOfNeighbors()
-        {
-            
-        }
-        
-
 
     }
 
     public enum TileState
     {
-        alive,
-        dead,
-        tileStateUnset
+        Alive,
+        Dead,
+        Unset
     }
 }

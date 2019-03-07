@@ -7,7 +7,7 @@ namespace GameOfLife.NET.Model
 {
     public class GameBoard
     {
-        public Tile[][] Grid { get; private set; } = new Tile[GameBoardWidth][];
+        public Tile[][] Grid { get; } = new Tile[GameBoardWidth][];
 
         public GameBoard(Tile[][] grid)
         {
@@ -47,38 +47,36 @@ namespace GameOfLife.NET.Model
 
         public void SetNextStateOfTile(Tile theTile)
         {
-            List<Tile> neighbors = this.FindNeighbors(theTile);
             List<Tile> liveNeighbors = this.FindLiveNeighbors(theTile);
-            List<Tile> deadNeighbors = this.FindDeadNeighbors(theTile);
 
-            if (theTile.State == TileState.alive)
+            if (theTile.State == TileState.Alive)
             {
                 if (liveNeighbors.Count > 3)
                 {
-                    theTile.NextState = TileState.dead;
+                    theTile.NextState = TileState.Dead;
                 }
                 else if (liveNeighbors.Count < 2)
                 {
-                    theTile.NextState = TileState.dead;
+                    theTile.NextState = TileState.Dead;
                 }
                 else if (liveNeighbors.Count == 2 || liveNeighbors.Count == 3)
                 {
-                    theTile.NextState = TileState.alive;
+                    theTile.NextState = TileState.Alive;
                 }
                 else
                 {
-                    theTile.NextState = TileState.dead;
+                    theTile.NextState = TileState.Dead;
                 }
             }
-            else if (theTile.State == TileState.dead)
+            else if (theTile.State == TileState.Dead)
             {
                 if (liveNeighbors.Count == 3)
                 {
-                    theTile.NextState = TileState.alive;
+                    theTile.NextState = TileState.Alive;
                 }  
                 else
                 {
-                    theTile.NextState = TileState.dead;
+                    theTile.NextState = TileState.Dead;
                 }
             }           
         }
@@ -144,7 +142,7 @@ namespace GameOfLife.NET.Model
 
             foreach (var neighbor in neighbors)
             {
-                if (neighbor.State == TileState.alive)
+                if (neighbor.State == TileState.Alive)
                 {
                     liveNeighbors.Add(neighbor);
                 }
@@ -152,26 +150,6 @@ namespace GameOfLife.NET.Model
 
             return liveNeighbors;
         }
-        
-        public List<Tile> FindDeadNeighbors(Tile theTile)
-        {
-            List<Tile> neighbors = FindNeighbors(theTile);
-            List<Tile> deadNeighbors = new List<Tile>();
-
-            foreach (var neighbor in neighbors)
-            {
-                if (neighbor.State == TileState.dead)
-                {
-                    deadNeighbors.Add(neighbor);
-                }
-            }
-
-            return deadNeighbors;
-        } 
-        
-        
-        
-        
     }
     
  
