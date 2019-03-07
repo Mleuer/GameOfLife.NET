@@ -12,12 +12,11 @@ namespace GameOfLife.NET.Model
             {
                 this.State = TileState.Dead;
             }
-            if (this.State == TileState.Dead)  
+            else if (this.State == TileState.Dead)  
             {
                 this.State = TileState.Alive;
             }
         }
-
     }
 
     public enum TileState
