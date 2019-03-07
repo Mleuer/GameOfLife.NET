@@ -75,9 +75,82 @@ namespace GameOfLife.NET.Test
             Tile theSameTile = gameBoard.Grid[tileIndex.Item1][tileIndex.Item2];
             
             Assert.AreSame(tile, theSameTile);
-            
-            
+        }
+        
+        [Test]
+        public void SetNextStateOfTileShouldSetNextStateToDeadWhenLiveTileHasLessThanTwoLiveNeighbors()
+        {
+            var tile = new Tile {State = TileState.alive};
 
+            Tile[][] grid = new Tile[][]
+            {
+                new Tile[] {new Tile {State = TileState.alive}, new Tile(), new Tile()},
+                new Tile[] {new Tile(),                         tile,       new Tile()},
+                new Tile[] {new Tile(),                         new Tile(), new Tile()}
+            };
+
+            var gameBoard = new GameBoard(grid);
+
+            gameBoard.SetNextStateOfTile(tile);
+
+            Assert.AreEqual(TileState.dead, tile.NextState);
+        }
+        
+        [Test]
+        public void SetNextStateOfTileShouldSetNextStateToAliveWhenLiveTileHasTwoOrThreeThreeLiveNeighbors()
+        {
+            var tile = new Tile {State = TileState.alive};
+
+            Tile[][] grid = new Tile[][]
+            {
+                new Tile[] {new Tile(),                           new Tile(),                         new Tile {State = TileState.alive}},
+                new Tile[] {new Tile(){State = TileState.alive}, tile,                                new Tile()},
+                new Tile[] {new Tile(),                           new Tile {State = TileState.alive}, new Tile()}
+            };
+
+            var gameBoard = new GameBoard(grid);
+
+            gameBoard.SetNextStateOfTile(tile);
+
+            Assert.AreEqual(TileState.alive, tile.NextState);
+        }
+
+        [Test]
+        public void SetNextStateOfTileShouldSetNextStateToDeadWhenLiveTileHasMoreThanThreeLiveNeighbors()
+        {
+            var tile = new Tile {State = TileState.alive};
+
+            Tile[][] grid = new Tile[][]
+            {
+                new Tile[] {new Tile {State = TileState.alive}, new Tile(),                         new Tile {State = TileState.alive}},
+                new Tile[] {new Tile {State = TileState.alive}, tile,                               new Tile()},
+                new Tile[] {new Tile(),                         new Tile {State = TileState.alive}, new Tile()}
+            };
+
+            var gameBoard = new GameBoard(grid);
+
+            gameBoard.SetNextStateOfTile(tile);
+
+            Assert.AreEqual(TileState.dead, tile.NextState);
+        }
+
+        [Test]
+        public void SetNextStateOfTileShouldSetNextStateToAliveWhenDeadTileHasExactlyThreeLiveNeighbors()
+        {
+            var tile = new Tile{State = TileState.dead};
+            
+            Tile[][] grid = new Tile[][]
+            {
+                new Tile[] {new Tile{State = TileState.alive}, new Tile(),                        new Tile{State = TileState.alive}},
+                new Tile[] {new Tile(),                        tile,                              new Tile()},
+                new Tile[] {new Tile(),                        new Tile{State = TileState.alive}, new Tile()}
+            };
+  
+            var gameBoard = new GameBoard(grid);
+            
+            gameBoard.SetNextStateOfTile(tile);
+            
+            Assert.AreEqual(TileState.alive, tile.NextState);
         }
     }
 }

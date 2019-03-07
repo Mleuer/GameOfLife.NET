@@ -45,6 +45,44 @@ namespace GameOfLife.NET.Model
             }
         }
 
+        public void SetNextStateOfTile(Tile theTile)
+        {
+            List<Tile> neighbors = this.FindNeighbors(theTile);
+            List<Tile> liveNeighbors = this.FindLiveNeighbors(theTile);
+            List<Tile> deadNeighbors = this.FindDeadNeighbors(theTile);
+
+            if (theTile.State == TileState.alive)
+            {
+                if (liveNeighbors.Count > 3)
+                {
+                    theTile.NextState = TileState.dead;
+                }
+                else if (liveNeighbors.Count < 2)
+                {
+                    theTile.NextState = TileState.dead;
+                }
+                else if (liveNeighbors.Count == 2 || liveNeighbors.Count == 3)
+                {
+                    theTile.NextState = TileState.alive;
+                }
+                else
+                {
+                    theTile.NextState = TileState.dead;
+                }
+            }
+            else if (theTile.State == TileState.dead)
+            {
+                if (liveNeighbors.Count == 3)
+                {
+                    theTile.NextState = TileState.alive;
+                }  
+                else
+                {
+                    theTile.NextState = TileState.dead;
+                }
+            }           
+        }
+
         public List<Tile> FindNeighbors(Tile theTile)
         {
             var game1 = new GameBoard(new Tile[GameBoardWidth][]);
@@ -98,6 +136,38 @@ namespace GameOfLife.NET.Model
             
             return neighbors;
         }
+        
+        public List<Tile> FindLiveNeighbors(Tile theTile)
+        {
+            List<Tile> neighbors = FindNeighbors(theTile);
+            List<Tile> liveNeighbors = new List<Tile>();
+
+            foreach (var neighbor in neighbors)
+            {
+                if (neighbor.State == TileState.alive)
+                {
+                    liveNeighbors.Add(neighbor);
+                }
+            }
+
+            return liveNeighbors;
+        }
+        
+        public List<Tile> FindDeadNeighbors(Tile theTile)
+        {
+            List<Tile> neighbors = FindNeighbors(theTile);
+            List<Tile> deadNeighbors = new List<Tile>();
+
+            foreach (var neighbor in neighbors)
+            {
+                if (neighbor.State == TileState.dead)
+                {
+                    deadNeighbors.Add(neighbor);
+                }
+            }
+
+            return deadNeighbors;
+        } 
         
         
         
