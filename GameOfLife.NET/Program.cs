@@ -1,4 +1,5 @@
-﻿using SFML.Graphics;
+﻿using GameOfLife.NET.View;
+using SFML.Graphics;
 using SFML.Window;
 
 namespace GameOfLife.NET
@@ -7,14 +8,12 @@ namespace GameOfLife.NET
     {
         public static void Main()
         {
-            bool running = true;
-            SFML.Window.VideoMode videoMode = new VideoMode(512, 512);
-            SFML.Graphics.RenderWindow window = new RenderWindow(videoMode, "window");
+            var running = true;
+            BoardWindow boardWindow = new BoardWindow();
             
             while (running)
             {
-                window.DispatchEvents();
-                window.Clear();
+                boardWindow.Draw();
             }
             
         }

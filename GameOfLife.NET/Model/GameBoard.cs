@@ -1,16 +1,33 @@
 using System;
 using System.Collections.Generic;
+using SFML.Graphics;
+
 namespace GameOfLife.NET.Model
 
 
 {
-    public class GameBoard
+    public class GameBoard : Drawable
     {
         public Tile[][] Grid { get; }
 
         public GameBoard(Tile[][] grid)
         {
             Grid = grid;
+        }
+
+        public GameBoard()
+        {
+            Grid = new Tile[Config.Configuration.GameBoardWidth][];
+            for (int i = 0; i < Config.Configuration.GameBoardWidth; i++)
+            {
+                Tile[] tiles = Grid[i];
+                tiles = new Tile[Config.Configuration.GameBoardHeight];
+                
+                for (int j = 0; j < Config.Configuration.GameBoardHeight; j++)
+                {
+                    tiles[j] = new Tile();
+                }
+            }
         }
 
         public (uint, uint) FindIndexOfTile(Tile tile)
@@ -134,6 +151,17 @@ namespace GameOfLife.NET.Model
             }
 
             return liveNeighbors;
+        }
+
+        public void Draw(RenderTarget target, RenderStates states)
+        {
+            foreach (Tile[] tiles in Grid)
+            {
+                foreach (var tile in tiles)
+                {
+                    tile.Draw(target, states);
+                }
+            }
         }
     }
     
