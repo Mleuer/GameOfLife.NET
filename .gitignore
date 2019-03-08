@@ -11,3 +11,4 @@ packages/
 
 GameOfLife\.NET\.sln\.DotSettings\.user
 .DS_Store
+*.dll
