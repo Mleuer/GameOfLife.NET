@@ -10,11 +10,11 @@ namespace GameOfLife.NET.Model
         public TileState State { get; set; } = TileState.Dead;
         public TileState NextState { get; set; } = TileState.Unset;
 
-        public Sprite DeadTileSprite = new Sprite
+        public static Sprite DeadTileSprite = new Sprite
         {
             Texture = new Texture(new Image(new FileStream("Assets/Bitmaps/DeadTileSmall.png", FileMode.Open)))
         };
-        public Sprite LiveTileSprite = new Sprite
+        public static Sprite LiveTileSprite = new Sprite
         {
             Texture = new Texture(new Image(new FileStream("Assets/Bitmaps/LiveTileSmall.png", FileMode.Open)))
         };

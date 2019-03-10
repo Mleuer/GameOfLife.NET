@@ -20,8 +20,8 @@ namespace GameOfLife.NET.Model
             Grid = new Tile[Config.Configuration.GameBoardWidth][];
             for (int i = 0; i < Config.Configuration.GameBoardWidth; i++)
             {
+                Grid[i] = new Tile[Config.Configuration.GameBoardHeight];
                 Tile[] tiles = Grid[i];
-                tiles = new Tile[Config.Configuration.GameBoardHeight];
                 
                 for (int j = 0; j < Config.Configuration.GameBoardHeight; j++)
                 {
