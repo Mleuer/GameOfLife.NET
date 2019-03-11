@@ -10,6 +10,9 @@ namespace GameOfLife.NET
         {
             var running = true;
             BoardWindow boardWindow = new BoardWindow();
+            boardWindow.Board.Grid[1][5].ChangeState();
+            boardWindow.Board.Grid[50][14].ChangeState();
+            boardWindow.Board.Grid[29][40].ChangeState();
             
             while (running)
             {

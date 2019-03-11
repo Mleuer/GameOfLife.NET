@@ -66,8 +66,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Assets\Bitmaps\DeadTile.png" />
     <Content Include="Assets\Bitmaps\LiveTile.png" />
+    <Content Include="Assets\Bitmaps\DeadTile.png" />
     <Content Include="Config\sfmlnet-audio-2.dll.config" />
     <Content Include="Config\sfmlnet-graphics-2.dll.config" />
     <Content Include="Config\sfmlnet-system-2.dll.config" />

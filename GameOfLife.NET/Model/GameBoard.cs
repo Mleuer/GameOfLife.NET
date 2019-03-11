@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using SFML.Graphics;
+using static GameOfLife.NET.Config.Configuration;
 
 namespace GameOfLife.NET.Model
 
@@ -8,24 +9,24 @@ namespace GameOfLife.NET.Model
 {
     public class GameBoard : Drawable
     {
-        public Tile[][] Grid { get; }
+        public GraphicalTile[][] Grid { get; }
 
-        public GameBoard(Tile[][] grid)
+        public GameBoard(GraphicalTile[][] grid)
         {
             Grid = grid;
         }
 
         public GameBoard()
         {
-            Grid = new Tile[Config.Configuration.GameBoardWidth][];
+            Grid = new GraphicalTile[Config.Configuration.GameBoardWidth][];
             for (int i = 0; i < Config.Configuration.GameBoardWidth; i++)
             {
-                Grid[i] = new Tile[Config.Configuration.GameBoardHeight];
-                Tile[] tiles = Grid[i];
+                Grid[i] = new GraphicalTile[Config.Configuration.GameBoardHeight];
+                GraphicalTile[] tiles = Grid[i];
                 
                 for (int j = 0; j < Config.Configuration.GameBoardHeight; j++)
                 {
-                    tiles[j] = new Tile();
+                    tiles[j] = new GraphicalTile(FindPositionOfTile(i, j));
                 }
             }
         }
@@ -155,13 +156,21 @@ namespace GameOfLife.NET.Model
 
         public void Draw(RenderTarget target, RenderStates states)
         {
-            foreach (Tile[] tiles in Grid)
+            foreach (GraphicalTile[] tiles in Grid)
             {
                 foreach (var tile in tiles)
                 {
                     tile.Draw(target, states);
                 }
             }
+        }
+
+        public static (uint, uint) FindPositionOfTile(int outerArrayIndex, int innerArrayIndex)
+        {
+            uint yPosition = (uint)(outerArrayIndex * TileHeight);
+            uint xPosition = (uint)(innerArrayIndex * TileWidth);
+
+            return (xPosition, yPosition);
         }
     }
     
