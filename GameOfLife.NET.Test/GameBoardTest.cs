@@ -165,10 +165,10 @@ namespace GameOfLife.NET.Test
                 new Tile[] {new Tile(),  new Tile()}  
             };
 
-            (uint, uint) topLeftPosition = GraphicalGameBoard.FindPositionOfTile(0, 0);
-            (uint, uint) topRightPosition = GraphicalGameBoard.FindPositionOfTile(0, 1);
-            (uint, uint) bottomLeftPosition = GraphicalGameBoard.FindPositionOfTile(1, 0);
-            (uint, uint) bottomRightPosition = GraphicalGameBoard.FindPositionOfTile(1, 1);
+            (uint, uint) topLeftPosition = GraphicalGameBoard.Find2DCoordinateOfTile(0, 0);
+            (uint, uint) topRightPosition = GraphicalGameBoard.Find2DCoordinateOfTile(0, 1);
+            (uint, uint) bottomLeftPosition = GraphicalGameBoard.Find2DCoordinateOfTile(1, 0);
+            (uint, uint) bottomRightPosition = GraphicalGameBoard.Find2DCoordinateOfTile(1, 1);
 
             Assert.AreEqual( (0u, 0u), topLeftPosition);
             Assert.AreEqual( (TileWidth, 0u), topRightPosition);

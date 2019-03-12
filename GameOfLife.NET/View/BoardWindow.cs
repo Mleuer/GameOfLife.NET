@@ -13,9 +13,10 @@ namespace GameOfLife.NET.View
         
         public void Draw()
         {
-            Window.DispatchEvents();
             Window.Clear();
             Board.Draw(Window, RenderStates.Default);
+            Window.Display();
+            Window.DispatchEvents();
             Thread.Sleep(TimeSpan.FromMilliseconds(16)); 
         }
         

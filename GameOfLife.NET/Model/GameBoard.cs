@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using SFML.Graphics;
+using SFML.System;
 using static GameOfLife.NET.Config.Configuration;
 
 namespace GameOfLife.NET.Model
@@ -169,10 +170,20 @@ namespace GameOfLife.NET.Model
                 
                 for (int j = 0; j < Config.Configuration.GameBoardHeight; j++)
                 {
-                    tiles[j] = new GraphicalTile(FindPositionOfTile(i, j));
+                    tiles[j] = new GraphicalTile(Find2DCoordinateOfTile(i, j));
+                    AdjustSizeOfTile(tiles[j]);
                 }
             }
         }
+
+        private void AdjustSizeOfTile(GraphicalTile graphicalTile)
+        {
+            Vector2u size = graphicalTile.TileSprite.Texture.Size;
+            var desiredSize = new Vector2u(TileWidth, TileHeight);
+            var scale = new Vector2f((float)desiredSize.X / (float)size.X, (float)desiredSize.Y / (float)size.Y);
+            graphicalTile.TileSprite.Scale = scale;
+        }
+
         public GraphicalGameBoard(GraphicalTile[][] grid)
         {
             Grid = grid as GraphicalTile[][];
@@ -189,10 +200,10 @@ namespace GameOfLife.NET.Model
             }
         }
 
-        public static (uint, uint) FindPositionOfTile(int outerArrayIndex, int innerArrayIndex)
+        public static (uint, uint) Find2DCoordinateOfTile(int outerArrayIndex, int innerArrayIndex)
         {
-            var yPosition = (uint)(outerArrayIndex * TileHeight);
-            var xPosition = (uint)(innerArrayIndex * TileWidth);
+            uint yPosition = (uint)(outerArrayIndex * TileHeight) + (uint)(outerArrayIndex * Margin);
+            uint xPosition = (uint)(innerArrayIndex * TileWidth) + (uint)(innerArrayIndex * Margin);
 
             return (xPosition, yPosition);
         }

@@ -6,12 +6,13 @@ namespace GameOfLife.NET.Config
 {
     public static class Configuration
     {
-        public const uint GameBoardWidth = 64;
-        public const uint GameBoardHeight = 64;
+        public const uint GameBoardWidth = 32;
+        public const uint GameBoardHeight = 32;
         public const uint TileWidth = ResolutionWidth / GameBoardWidth;
         public const uint TileHeight = ResolutionHeight / GameBoardHeight;
-        public const uint ResolutionWidth  = 512;
-        public const uint ResolutionHeight = 512;
+        public const uint ResolutionWidth  = 896;
+        public const uint ResolutionHeight = 896;
+        public const uint Margin = 4;
         public static string DeadTileImagePath = "Assets/Bitmaps/DeadTileSmall.png";
         public static string LiveTileImagePath = "Assets/Bitmaps/LiveTileSmall.png";
 
