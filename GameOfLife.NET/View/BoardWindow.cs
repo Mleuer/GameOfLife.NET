@@ -9,7 +9,7 @@ namespace GameOfLife.NET.View
     public class BoardWindow
     {
         public RenderWindow Window = new RenderWindow(new VideoMode(Config.Configuration.ResolutionWidth, Config.Configuration.ResolutionHeight) , "Game of Life");
-        public GameBoard Board = new GameBoard();
+        public GraphicalGameBoard Board = new GraphicalGameBoard();
         
         public void Draw()
         {

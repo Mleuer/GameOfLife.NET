@@ -25,8 +25,9 @@ namespace GameOfLife.NET.Model
 
     public class GraphicalTile : Tile, Drawable
     {
-        public static Texture DeadTileTexture {get;} = new Texture(new Image(new FileStream("Assets/Bitmaps/DeadTileSmall.png", FileMode.Open)));
-        public static Texture LiveTileTexture { get; } = new Texture(new Image(new FileStream("Assets/Bitmaps/LiveTileSmall.png", FileMode.Open)));
+        
+        public static Texture DeadTileTexture {get; set; }
+        public static Texture LiveTileTexture { get; set; }
 
         public Sprite DeadTileSprite = new Sprite
         {

@@ -1,4 +1,5 @@
-﻿using GameOfLife.NET.View;
+﻿using GameOfLife.NET.Config;
+using GameOfLife.NET.View;
 using SFML.Graphics;
 using SFML.Window;
 
@@ -9,6 +10,7 @@ namespace GameOfLife.NET
         public static void Main()
         {
             var running = true;
+            Configuration.LoadDefaultTileImages();
             BoardWindow boardWindow = new BoardWindow();
             boardWindow.Board.Grid[1][5].ChangeState();
             boardWindow.Board.Grid[50][14].ChangeState();

@@ -7,28 +7,28 @@ namespace GameOfLife.NET.Model
 
 
 {
-    public class GameBoard : Drawable
+    public class GameBoard
     {
-        public GraphicalTile[][] Grid { get; }
-
-        public GameBoard(GraphicalTile[][] grid)
-        {
-            Grid = grid;
-        }
+        public Tile[][] Grid { get; set; }
 
         public GameBoard()
         {
-            Grid = new GraphicalTile[Config.Configuration.GameBoardWidth][];
+            Grid = new Tile[Config.Configuration.GameBoardWidth][];
             for (int i = 0; i < Config.Configuration.GameBoardWidth; i++)
             {
-                Grid[i] = new GraphicalTile[Config.Configuration.GameBoardHeight];
-                GraphicalTile[] tiles = Grid[i];
+                Grid[i] = new Tile[Config.Configuration.GameBoardHeight];
+                Tile[] tiles = Grid[i];
                 
                 for (int j = 0; j < Config.Configuration.GameBoardHeight; j++)
                 {
-                    tiles[j] = new GraphicalTile(FindPositionOfTile(i, j));
+                    tiles[j] = new Tile();
                 }
             }
+        }
+
+        public GameBoard(Tile[][] grid)
+        {
+            Grid = grid;
         }
 
         public (uint, uint) FindIndexOfTile(Tile tile)
@@ -154,6 +154,30 @@ namespace GameOfLife.NET.Model
             return liveNeighbors;
         }
 
+        
+    }
+
+    public class GraphicalGameBoard : GameBoard, Drawable
+    {
+        public GraphicalGameBoard()
+        {
+            Grid = new GraphicalTile[Config.Configuration.GameBoardWidth][];
+            for (int i = 0; i < Config.Configuration.GameBoardWidth; i++)
+            {
+                Grid[i] = new GraphicalTile[Config.Configuration.GameBoardHeight];
+                GraphicalTile[] tiles = (GraphicalTile[]) Grid[i];
+                
+                for (int j = 0; j < Config.Configuration.GameBoardHeight; j++)
+                {
+                    tiles[j] = new GraphicalTile(FindPositionOfTile(i, j));
+                }
+            }
+        }
+        public GraphicalGameBoard(GraphicalTile[][] grid)
+        {
+            Grid = grid as GraphicalTile[][];
+        }
+        
         public void Draw(RenderTarget target, RenderStates states)
         {
             foreach (GraphicalTile[] tiles in Grid)
@@ -167,8 +191,8 @@ namespace GameOfLife.NET.Model
 
         public static (uint, uint) FindPositionOfTile(int outerArrayIndex, int innerArrayIndex)
         {
-            uint yPosition = (uint)(outerArrayIndex * TileHeight);
-            uint xPosition = (uint)(innerArrayIndex * TileWidth);
+            var yPosition = (uint)(outerArrayIndex * TileHeight);
+            var xPosition = (uint)(innerArrayIndex * TileWidth);
 
             return (xPosition, yPosition);
         }
