@@ -54,7 +54,7 @@ namespace GameOfLife.NET.Model
 
         public Sprite TileSprite = new Sprite
         {
-            Texture = LiveTileTexture
+            Texture = DeadTileTexture
         };
         
 

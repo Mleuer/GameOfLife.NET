@@ -12,7 +12,7 @@ namespace GameOfLife.NET
             var running = true;
             Configuration.LoadDefaultTileImages();
             BoardWindow boardWindow = new BoardWindow();
-            boardWindow.Board.Grid[1][5].ChangeState();
+            boardWindow.Board.Grid[10][15].ChangeState();
             
             
             while (running)
