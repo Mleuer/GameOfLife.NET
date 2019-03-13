@@ -32,6 +32,37 @@ namespace GameOfLife.NET.Model
             Grid = grid;
         }
 
+        public void UpdateState()
+        {
+            SetNextStateOfTiles();
+            UpdateStateOfTiles();
+        }
+        private void UpdateStateOfTiles()
+        {
+            foreach (Tile[] rowOfTiles in Grid)
+            {
+                foreach (Tile tile in rowOfTiles)
+                {
+                    tile.State = tile.NextState;
+                }
+            }
+        }
+        private void SetNextStateOfTiles()
+        {
+            foreach (Tile[] rowOfTiles in Grid)
+            {
+                foreach (Tile tile in rowOfTiles)
+                {
+                    this.SetNextStateOfTile(tile);
+                }
+            }
+        }
+
+        public void RandomSeed(uint numberOfTiles)
+        {
+            
+        }
+
         public (uint, uint) FindIndexOfTile(Tile tile)
         {
             for (uint i = 0; i < Grid.Length; i++)
@@ -154,7 +185,6 @@ namespace GameOfLife.NET.Model
 
             return liveNeighbors;
         }
-
         
     }
 

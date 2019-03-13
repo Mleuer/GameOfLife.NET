@@ -7,6 +7,26 @@ namespace GameOfLife.NET.Test
 {
     public class GameBoardTest
     {
+
+        [Test]
+        public void UpdateStateShouldGiveNextStateOfABlinker()
+        {
+            Tile[][] grid = new Tile[][]
+            {
+                new Tile[] {new Tile(), new Tile {State = TileState.Alive}, new Tile()},
+                new Tile[] {new Tile(), new Tile {State = TileState.Alive}, new Tile()},
+                new Tile[] {new Tile(), new Tile {State = TileState.Alive}, new Tile()}
+            };
+            
+            var gameBoard = new GameBoard(grid);
+            gameBoard.UpdateState();
+            
+            Assert.AreEqual(TileState.Alive, grid[1][0].State );
+            Assert.AreEqual(TileState.Alive, grid[1][2].State );
+            Assert.AreEqual(TileState.Dead, grid[0][1].State );
+            Assert.AreEqual(TileState.Dead, grid[2][1].State );
+        }
+        
         [Test]
         public void FindNeighborsShouldReturnAdjacentTilesWhenTileIsSurroundedByTiles()
         {            
@@ -174,8 +194,6 @@ namespace GameOfLife.NET.Test
             Assert.AreEqual( (TileWidth, 0u), topRightPosition);
             Assert.AreEqual( (0u, TileHeight), bottomLeftPosition);
             Assert.AreEqual( (TileWidth, TileHeight), bottomRightPosition);
-
-
         }
     }
 }

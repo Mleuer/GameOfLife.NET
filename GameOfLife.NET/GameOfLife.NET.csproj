@@ -56,11 +56,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Config\Configuration.cs" />
+    <Compile Include="Control\Game.cs" />
     <Compile Include="Model\GameBoard.cs" />
     <Compile Include="Model\Tile.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="View\BoardWindow.cs" />
+    <Compile Include="View\MainWindow.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
