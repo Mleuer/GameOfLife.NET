@@ -58,9 +58,24 @@ namespace GameOfLife.NET.Model
             }
         }
 
-        public void RandomSeed(uint numberOfTiles)
+        public void SetTilesAliveAtRandom(uint numberOfTiles)
         {
+            var random = new Random();
             
+            if (numberOfTiles < GameBoardWidth * GameBoardHeight)
+            { 
+                for (uint i = 0; i < numberOfTiles; i++)
+                {
+                   var randomXIndex = random.Next(0, (int)GameBoardHeight);
+                   var randomYIndex = random.Next(0, (int)GameBoardWidth);
+                   var randomTile = Grid[(uint) randomYIndex][(uint) randomXIndex];
+                   randomTile.State = TileState.Alive;
+                } 
+            }
+            else
+            {
+                throw new ArgumentException("Argument out of range of GameBoard.");
+            }
         }
 
         public (uint, uint) FindIndexOfTile(Tile tile)

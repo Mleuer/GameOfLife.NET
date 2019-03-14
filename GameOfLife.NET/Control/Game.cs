@@ -13,6 +13,7 @@ namespace GameOfLife.NET.Control
         
         public void Play()
         {
+            Board.SetTilesAliveAtRandom(200u);
             Window.Draw(Board);
             Thread.Sleep(TimeSpan.FromSeconds(3)); 
             
