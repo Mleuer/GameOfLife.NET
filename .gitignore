@@ -12,3 +12,9 @@ packages/
 GameOfLife\.NET\.sln\.DotSettings\.user
 .DS_Store
 *.dll
+
+GameOfLife.Core.NET/obj
+GameOfLife.Core.NET/bin
+
+GameOfLife.Core.NET.Test/bin
+GameOfLife.Core.NET.Test/obj

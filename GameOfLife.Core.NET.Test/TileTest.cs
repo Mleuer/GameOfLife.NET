@@ -1,9 +1,7 @@
-﻿using System;
-using GameOfLife.NET;
-using GameOfLife.NET.Model;
-using NUnit.Framework;
+﻿using NUnit.Framework;
+using GameOfLife.Core.NET.Model;
 
-namespace GameOfLife.NET.Test
+namespace GameOfLife.Core.NET.Test
 {
     
     public class TileTest

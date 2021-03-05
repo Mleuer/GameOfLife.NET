@@ -1,9 +1,9 @@
 using System;
 using System.Threading;
-using GameOfLife.NET.Model;
-using GameOfLife.NET.View;
+using GameOfLife.Core.NET.Model;
+using GameOfLife.Core.NET.View;
 
-namespace GameOfLife.NET.Control
+namespace GameOfLife.Core.NET.Control
 {
     public class Game
     {

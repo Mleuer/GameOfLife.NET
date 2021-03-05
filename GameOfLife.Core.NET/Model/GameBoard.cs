@@ -2,25 +2,32 @@ using System;
 using System.Collections.Generic;
 using SFML.Graphics;
 using SFML.System;
-using static GameOfLife.NET.Config.Configuration;
+using static GameOfLife.Core.NET.Config.Configuration;
 
-namespace GameOfLife.NET.Model
-
-
+namespace GameOfLife.Core.NET.Model
 {
     public class GameBoard
     {
+	    public uint Width
+	    {
+		    get { return (uint) Grid.Length; }
+	    }
+	    
+	    public uint Height
+	    {
+		    get { return (uint) Grid[0].Length; }
+	    }
         public Tile[][] Grid { get; set; }
 
-        public GameBoard()
+        public GameBoard(uint gameBoardWidth = GameBoardWidth, uint gameBoardHeight = GameBoardHeight)
         {
-            Grid = new Tile[Config.Configuration.GameBoardWidth][];
-            for (int i = 0; i < Config.Configuration.GameBoardWidth; i++)
+            Grid = new Tile[gameBoardWidth][];
+            for (int i = 0; i < gameBoardWidth; i++)
             {
-                Grid[i] = new Tile[Config.Configuration.GameBoardHeight];
+                Grid[i] = new Tile[gameBoardHeight];
                 Tile[] tiles = Grid[i];
                 
-                for (int j = 0; j < Config.Configuration.GameBoardHeight; j++)
+                for (int j = 0; j < gameBoardHeight; j++)
                 {
                     tiles[j] = new Tile();
                 }
@@ -62,12 +69,12 @@ namespace GameOfLife.NET.Model
         {
             var random = new Random();
             
-            if (numberOfTiles < GameBoardWidth * GameBoardHeight)
+            if (numberOfTiles < (Width * Height))
             { 
                 for (uint i = 0; i < numberOfTiles; i++)
                 {
-                   var randomXIndex = random.Next(0, (int)GameBoardHeight);
-                   var randomYIndex = random.Next(0, (int)GameBoardWidth);
+                   var randomXIndex = random.Next(0, (int) Height);
+                   var randomYIndex = random.Next(0, (int) Width);
                    var randomTile = Grid[(uint) randomYIndex][(uint) randomXIndex];
                    randomTile.State = TileState.Alive;
                 } 
@@ -205,17 +212,21 @@ namespace GameOfLife.NET.Model
 
     public class GraphicalGameBoard : GameBoard, Drawable
     {
-        public GraphicalGameBoard()
+        public GraphicalGameBoard(uint gameBoardWidth = GameBoardWidth, uint gameBoardHeight = GameBoardHeight)
         {
-            Grid = new GraphicalTile[Config.Configuration.GameBoardWidth][];
-            for (int i = 0; i < Config.Configuration.GameBoardWidth; i++)
+            Grid = new GraphicalTile[gameBoardWidth][] as Tile[][];
+            for (int i = 0; i < gameBoardWidth; i++)
             {
-                Grid[i] = new GraphicalTile[Config.Configuration.GameBoardHeight];
+                Grid[i] = new GraphicalTile[gameBoardHeight] as Tile[];
                 GraphicalTile[] tiles = (GraphicalTile[]) Grid[i];
                 
-                for (int j = 0; j < Config.Configuration.GameBoardHeight; j++)
+                for (int j = 0; j < gameBoardHeight; j++)
                 {
-                    tiles[j] = new GraphicalTile(Find2DCoordinateOfTile(i, j));
+                    tiles[j] = new GraphicalTile(Find2DCoordinateOfTile(
+                                                                        boardWidth: Width,
+                                                                        boardHeight: Height,
+                                                                        outerArrayIndex: i, 
+                                                                        innerArrayIndex: j));
                     AdjustSizeOfTile(tiles[j]);
                 }
             }
@@ -224,31 +235,34 @@ namespace GameOfLife.NET.Model
         private void AdjustSizeOfTile(GraphicalTile graphicalTile)
         {
             Vector2u size = graphicalTile.TileSprite.Texture.Size;
-            var desiredSize = new Vector2u(TileWidth, TileHeight);
-            var scale = new Vector2f((float)desiredSize.X / (float)size.X, (float)desiredSize.Y / (float)size.Y);
+            var desiredSize = new Vector2u(ComputeTileWidth(Width), ComputeTileHeight(Height));
+            var scale = new Vector2f(desiredSize.X / (float) size.X, desiredSize.Y / (float) size.Y);
             graphicalTile.TileSprite.Scale = scale;
         }
 
         public GraphicalGameBoard(GraphicalTile[][] grid)
         {
-            Grid = grid as GraphicalTile[][];
+            Grid = grid as Tile[][];
         }
         
         public void Draw(RenderTarget target, RenderStates states)
         {
-            foreach (GraphicalTile[] tiles in Grid)
+            foreach (Tile[] tiles in Grid)
             {
-                foreach (var tile in tiles)
-                {
-                    tile.Draw(target, states);
-                }
+	            if (tiles is GraphicalTile[] graphicalTiles)
+	            {
+		            foreach (GraphicalTile tile in graphicalTiles)
+		            {
+			            tile.Draw(target, states);
+		            }
+	            }
             }
         }
 
-        public static (uint, uint) Find2DCoordinateOfTile(int outerArrayIndex, int innerArrayIndex)
+        public static (uint, uint) Find2DCoordinateOfTile(uint boardWidth, uint boardHeight, int outerArrayIndex, int innerArrayIndex)
         {
-            uint yPosition = (uint)(outerArrayIndex * TileHeight) + (uint)(outerArrayIndex * Margin);
-            uint xPosition = (uint)(innerArrayIndex * TileWidth) + (uint)(innerArrayIndex * Margin);
+            uint yPosition = (uint)(outerArrayIndex * boardHeight) + (uint)(outerArrayIndex * Margin);
+            uint xPosition = (uint)(innerArrayIndex * boardWidth) + (uint)(innerArrayIndex * Margin);
 
             return (xPosition, yPosition);
         }
